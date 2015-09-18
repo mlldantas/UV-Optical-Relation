@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """
-    Data Reduction and Adjustments
+    Data Crazy Match
 
     @author:  Maria Luiza Linhares Dantas
     @date:    2015.09.17
