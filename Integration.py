@@ -340,8 +340,8 @@ if __name__ == '__main__':
                      alpha=0.5, label = 'GALEX fluxes')
         plt.errorbar(wavelengths_galex, flux_galex_corr * wavelengths_galex, yerr=sigma_uv, fmt='.', color='#0000FF',
                      elinewidth=3)
-        plt.xlabel('$\lambda$ ($\AA$)', fontsize=40)
-        plt.ylabel(r"$F_{\lambda} \lambda$ ($10^{-17} erg \, s^{-1} cm^{-2}$)", fontsize=40)
+        plt.xlabel('$\lambda$ ($\AA$)', fontsize=25)
+        plt.ylabel(r"$F_{\lambda} \lambda$ ($10^{-17} erg \, s^{-1} cm^{-2}$)", fontsize=25)
         plt.legend(loc='best', numpoints=1, fontsize=20, frameon=False)
         plt.grid(alpha=0.40)
         plt.tick_params('both', labelsize='20')
