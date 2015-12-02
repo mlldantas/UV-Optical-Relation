@@ -5,7 +5,7 @@
     Data Reduction and Adjustments
 
     @author:  Maria Luiza Linhares Dantas
-    @date:    2015.01.07
+    @date:    2015.01.08
     @version: 0.1.8
 
     This program uses synthetic spectra produced by STARLIGHT and adjusts observational data using chi^2 minimization
@@ -17,6 +17,8 @@
 
     Main modification in this version: we are using SDSS' dereddenned magnitudes and Fitzpatrick's Law to correct the
     UV magnitudes.
+    
+    This version accounts the fiber correction in the flux calculation.
 
 """
 
@@ -36,10 +38,11 @@ if __name__ == '__main__':
 
     # Configuring the inputs -------------------------------------------------------------------------------------------
     spec_files_path   = '/home/mldantas/Documentos/Programas/Integracao/EspectrosRebinadosSelfZ'
-    results_path      = '/home/mldantas/Documentos/Programas/Integracao/Results/IntegracaoV9'
+    results_path      = '/home/mldantas/Documentos/Programas/Integracao/Results/IntegracaoV10'
     data_obs_whan     = '/home/mldantas/Documentos/Programas/Integracao/Results/Car_Fitz/data_match_002.txt'
     filelist          = '/home/mldantas/Documentos/Programas/Integracao/filelistnorm.txt'
     pivot_wavelengths = '/home/mldantas/Documentos/Programas/Integracao/pivot_lambdas.txt'
+    fmagz             = '/home/mldantas/Documentos/Programas/Integracao/fibermagz.csv'
 
     # Constants --------------------------------------------------------------------------------------------------------
     c = 2.99792458E18	# Light Speed in Angstrom/s
@@ -114,13 +117,15 @@ if __name__ == '__main__':
     interm_pop_ratio     = np.loadtxt(data_obs_whan, usecols=[55])
     old_pop_ratio        = np.loadtxt(data_obs_whan, usecols=[56])
 
+    fibermag_z           = np.loadtxt(fmagz, delimiter=',', usecols=[5])
+
     # Loading filelist -------------------------------------------------------------------------------------------------
     filelist = np.loadtxt(filelist, dtype=str)
     indexes  = np.arange(plate.size)
 
     # Creating output file> > parameters_out ---------------------------------------------------------------------------
     parameters_out \
-        = open('/home/mldantas/Documentos/Programas/Integracao/Results/IntegracaoV9/outputdata.txt', 'w')
+        = open('/home/mldantas/Documentos/Programas/Integracao/Results/IntegracaoV10/outputdata.txt', 'w')
 
     print >> parameters_out, '%s' % '#', '%11s' % 'ObjectID', '%13s' % 'plate', '%6s' % 'mjd', '%10s' % 'fiberID', \
         '%8s' % 'RA', '%12s' % 'Dec', '%17s' % 'model_mag_u', '%15s' % 'model_mag_g', '%14s' % 'model_mag_r', \
@@ -191,12 +196,14 @@ if __name__ == '__main__':
 
         # Calculating all SDSS fluxes ----------------------------------------------------------------------------------
         ## The following fluxes already account for extinction and K correction ----------------------------------------
-        flux_sdss = ((c/(wavelengths_sdss ** 2.)) * 10. ** (-0.4 * (mag_ab_sdss[index][0] + 48.60))/1E-17)
+        flux_sdss = ((c/(wavelengths_sdss ** 2.)) * 10.**(0.4 * (fibermag_z[index]-u_band[index])) *
+                     10. ** (-0.4 * (mag_ab_sdss[index][0] + 48.60))/1E-17)
                                                                                 # AB mag into flux + 1e-17 normalization
         # Calculating g,r,i,z SDSS fluxes ------------------------------------------------------------------------------
         ## The following fluxes already account for extinction and K correction ----------------------------------------
         flux_sdss_griz = \
-            ((c/(wavelengths_sdss_griz ** 2.)) * 10. ** (-0.4 * (mag_ab_sdss_griz[index][0] + 48.60))/1E-17)
+            ((c/(wavelengths_sdss_griz ** 2.)) * 10.**(0.4 * (fibermag_z[index]-u_band[index])) *
+             10. ** (-0.4 * (mag_ab_sdss_griz[index][0] + 48.60))/1E-17)
                                                                                 # AB mag into flux + 1e-17 normalization
 
         # Calculating GALEX fluxes and correcting it for numerous effects ----------------------------------------------
@@ -292,7 +299,7 @@ if __name__ == '__main__':
         sigma_uv = np.array([float(sigma_fuv_flux), float(sigma_nuv_flux)])
 
 
-        # Saving the results in a new file -----------------------------------------------------------------------------
+        #Saving the results in a new file -----------------------------------------------------------------------------
         print >> parameters_out, '%18d' % objid[index], '%7d' % plate[index], '%8d' % mjd[index], '%7d' % fiberid[index],\
             '%13.4f' % alpha[index], '%13.7f' % delta[index], '%12.5f' % u_band[index], '%14.5f' % g_band[index], \
             '%14.5f' % r_band[index], '%14.5f' % i_band[index], '%14.5f' % z_band[index], '%14.5f' % fuv_band[index], \
@@ -333,8 +340,8 @@ if __name__ == '__main__':
                      alpha=0.5, label = 'GALEX fluxes')
         plt.errorbar(wavelengths_galex, flux_galex_corr * wavelengths_galex, yerr=sigma_uv, fmt='.', color='#0000FF',
                      elinewidth=3)
-        plt.xlabel('$\lambda$ ($\AA$)', fontsize=25)
-        plt.ylabel("$F_{\lambda} \cdot \lambda$ ($10^{-17} erg s^{-1} cm^{-2}$)", fontsize=25)
+        plt.xlabel('$\lambda$ ($\AA$)', fontsize=40)
+        plt.ylabel(r"$F_{\lambda} \lambda$ ($10^{-17} erg \, s^{-1} cm^{-2}$)", fontsize=40)
         plt.legend(loc='best', numpoints=1, fontsize=20, frameon=False)
         plt.grid(alpha=0.40)
         plt.tick_params('both', labelsize='20')
@@ -342,12 +349,20 @@ if __name__ == '__main__':
         plt.xlim([1000, 10000])
         figure = plt.gcf() # get current figure
         figure.set_size_inches(12, 8)
-        plt.savefig(os.path.join(results_path, basename+'.png'), dpi = 100)
+        # plt.arrow(wavelengths_galex[0], flux_fuv_corr[0] * wavelengths_galex[0], 0,
+        #           fuv_synth_flux * wavelengths_galex[0]**(9/10), linewidth=1.5,head_width=100, head_length=(3 * 10**4),
+        #           color='red', fc='red', ec='red', alpha=0.6)
+        # plt.arrow(wavelengths_galex[1], flux_nuv_corr[0] * wavelengths_galex[1], 0,
+        #           nuv_synth_flux * wavelengths_galex[1]**(8.2/10), linewidth=1.5,head_width=100, head_length=(1 * 10**4),
+        #           color='red', fc='red', ec='red', alpha=0.6)
+        # plt.tick_params('both', labelsize='28')
+        plt.savefig(os.path.join(results_path, basename+'_final.png'), dpi = 100)
         #plt.show()
         plt.clf()
+        #exit()
 
 
     parameters_out.close()
 
 
-__author__ = 'mdastro'
+__author__ = 'mldantas'
