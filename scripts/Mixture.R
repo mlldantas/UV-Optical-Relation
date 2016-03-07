@@ -1,6 +1,6 @@
 library(mixtools)
 library(mclust)
-data<-read.table("data_index_AMADA.txt",header=TRUE)
+data<-read.table("https://raw.githubusercontent.com/mdastro/UV_Optical/master/Data/toy_data.csv",header=TRUE)
 
 
 g.r<-data$g.r
