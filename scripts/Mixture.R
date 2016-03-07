@@ -1,12 +1,13 @@
 library(mixtools)
 library(mclust)
-data<-read.table("https://raw.githubusercontent.com/mdastro/UV_Optical/master/Data/toy_data.csv",header=TRUE)
+data<-read.csv("https://raw.githubusercontent.com/mdastro/UV_Optical/master/Data/toy_data.csv",header=TRUE)
 
 
 g.r<-data$g.r
 FUV<-data$FUV.NUV
 
 
+# Run mixture model
 mixmdl = normalmixEM(g.r)
 #pdf("gr.pdf",height = 8,width = 8)
 plot(mixmdl,which=2,xlab2="g-r",ylab2="Densidade")
