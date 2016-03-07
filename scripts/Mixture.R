@@ -9,10 +9,10 @@ FUV<-data$FUV.NUV
 
 # Run mixture model
 mixmdl = normalmixEM(g.r)
-#pdf("gr.pdf",height = 8,width = 8)
+pdf("..//Figures/gr.pdf",height = 8,width = 8)
 plot(mixmdl,which=2,xlab2="g-r",ylab2="Densidade")
 lines(density(g.r), lty=2, lwd=2)
-#dev.off()
+dev.off()
 
 mixmdl3 = normalmixEM(FUV)
 pdf("FUV.NUV.pdf",height = 8,width = 8)
