@@ -6,16 +6,17 @@
 
     @author:  Maria Luiza Linhares Dantas
     @date:    2015.19.06
-    @version: 0.0.1
+    @version: 0.0.2
 
     This program makes the new binning for one all the spectra of our sample.
+    
+    This version: libraries that were not used were removed.
 
 """
 # ======================================================================================================================
 
 from __future__ import division
 import numpy as np
-import matplotlib.pyplot as plt
 import scipy.interpolate as s
 import os
 
