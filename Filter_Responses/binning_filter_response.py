@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 
 """
-    Data Reduction and Adjustments
     @author:  Maria Luiza Linhares Dantas
     @date:    2016.03.08
     @version: 0.0.1
