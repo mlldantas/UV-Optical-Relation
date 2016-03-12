@@ -39,6 +39,10 @@ if __name__ == '__main__':
     new_table = np.array(new_list)
     
 
-    np.savetxt('MyData_GALEX_SDSS_clean.csv', new_table, fmt='%s', delimiter=',', newline='\n', header='Objid,plate,mjd,fiberid,ra,dec,fiberMag_z,modelMag_u,modelMag_g,modelMag_r,modelMag_i,modelMag_z,fuv_mag,nuv_mag,dered_u,dered_g,dered_r,dered_i,dered_z,petroR90_r,modelMagErr_u,modelMagErr_g,modelMagErr_r,modelMagErr_i,modelMagErr_z,fuv_magerr,nuv_magerr,e_bv,redshift,s2n_r,sn_fuv_auto,survey,morph_type')
+    np.savetxt('MyData_GALEX_SDSS_clean.csv', new_table, fmt='%s', delimiter=',', newline='\n', 
+               header='Objid,plate,mjd,fiberid,ra,dec,fiberMag_z,modelMag_u,modelMag_g,modelMag_r,modelMag_i,'
+                      'modelMag_z,fuv_mag,nuv_mag,dered_u,dered_g,dered_r,dered_i,dered_z,petroR90_r,modelMagErr_u,'
+                      'modelMagErr_g,modelMagErr_r,modelMagErr_i,modelMagErr_z,fuv_magerr,nuv_magerr,e_bv,redshift,'
+                      's2n_r,sn_fuv_auto,survey,morph_type')
     
 __author__ = 'mldantas'
