@@ -3,15 +3,12 @@
 
 """
     Data Reduction and Adjustments
-
     @author:  Maria Luiza Linhares Dantas
-    @date:    2015.19.06
-    @version: 0.0.2
-
+    @date:    2016.07.06
+    @version: 0.0.3
     This program makes the new binning for one all the spectra of our sample.
     
-    This version: libraries that were not used were removed.
-
+    This version: paths updated, as well as filelist. 
 """
 # ======================================================================================================================
 
@@ -25,9 +22,9 @@ import os
 # Main thread ----------------------------------------------------------------------------------------------------------
 if __name__ == '__main__':
 
-    spec_files_path = '/home/mldantas/Documentos/Programas/Integracao/Espectros'
-    new_specs_path  = '/home/mldantas/Documentos/Programas/Integracao/EspectrosRebinados'
-    filelist        = '/home/mldantas/Documentos/Programas/Integracao/filelistnorm.txt'
+    spec_files_path = '/home/mldantas/Dropbox/MSc_paper/Dataset/Individual_Spectra'
+    new_specs_path  = '/home/mldantas/Dropbox/MSc_paper/Dataset/Rebinned_Spec_SelfZ'
+    filelist        = '/home/mldantas/Dropbox/MSc_paper/Dataset/filelist_individual_spectra.txt'
 
     filelist = np.loadtxt(filelist, dtype=str)
 
@@ -39,8 +36,8 @@ if __name__ == '__main__':
         flux = np.loadtxt(os.path.join(spec_files_path, spec_file), usecols=[1])
 
         interp_function = s.interp1d(wavelength, flux)
-        new_wavelength = np.linspace(wavelength.min(), 10000, 9000)
-        new_wavelength = np.arange(1005, 10000, 1)
+        new_wavelength = np.linspace(wavelength.min(), wavelength.max(), 9000)
+        new_wavelength = np.arange(wavelength.min(), wavelength.max(), 1)
         new_flux = np.arange(flux.min(), flux.max(), 9000)
         new_flux = interp_function(new_wavelength)
 
