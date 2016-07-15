@@ -1,5 +1,7 @@
 # From Bayesian Models for Astrophysical Data 
 require(R2jags)
+require(jagstools)
+require(ggplot2)
 
 # Read data
 
@@ -7,6 +9,7 @@ UV_dat <- read.table("..//data_trial/output_results.txt",header=T)
 
 y <- UV_dat$fuv_mag-UV_dat$dered_r
 x1 <- UV_dat$dered_g-UV_dat$dered_r
+nobs<-nrow(UV_dat)
 
 # Prepare data for prediction 
 M=500
@@ -70,7 +73,7 @@ jagsfit <- jags(
 print(jagsfit,justify = "left", digits=2)
 
 
-denplot(jagsfit,"beta")
+
 
 
 # Plot
