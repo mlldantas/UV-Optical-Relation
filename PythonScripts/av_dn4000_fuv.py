@@ -19,11 +19,7 @@ if __name__ == '__main__':
 
     # Configuring the inputs -------------------------------------------------------------------------------------------
     my_data       = '/home/mldantas/Dropbox/MSc_paper/Programs/Results/output_results.txt'
-    # lines         = '/home/mldantas/Dropbox/STARLIGHT/lines.txt'
     syn01       = '/home/mldantas/Dropbox/STARLIGHT/SYN01_MALU.txt'
-    # syn02       = '/home/mldantas/Dropbox/STARLIGHT/SYN02_MALU.txt'
-    # syn03       = '/home/mldantas/Dropbox/STARLIGHT/SYN03_MALU.txt'
-    # syn04       = '/home/mldantas/Dropbox/STARLIGHT/SYN04_MALU.txt'
     dn4000_txt    = '/home/mldantas/Dropbox/STARLIGHT/dn4000_MALU.txt'
 
     # The program itself -----------------------------------------------------------------------------------------------
@@ -117,9 +113,8 @@ if __name__ == '__main__':
     my_dn4000_mjd     = dn4000_mjd[dn4000_data_index]
     my_dn4000_fiberid = dn4000_fiberid[dn4000_data_index]
 
-    print extinction_plate.size, my_extinction_plate.size, dn4000_plate.size, my_dn4000_plate.size
-
-    for c in range(my_fiberid.size):
-        print my_plate[c], my_mjd[c], my_fiberid[c], my_fuv_obs[c], my_fuv_synth[c], my_dn4000_plate[c], \
-            my_dn4000_mjd[c], my_dn4000_fiberid[c], my_dn4000_synth[c], my_extinction_plate[c], my_extinction_mjd[c], \
-            my_extinction_fiberid[c], my_internal_extinction[c]
+    # Saving the resulting dataset -------------------------------------------------------------------------------------
+    np.savetxt('/home/mldantas/Dropbox/MSc_paper/Programs/Results/av_dn4000_fuv.csv',
+               np.column_stack((my_plate, my_mjd, my_fiberid, my_fuv_obs, my_fuv_synth, my_dn4000_synth,
+                                my_internal_extinction)),fmt="%d,%d,%d,%.4f,%.4f,%.4f,%.4f", delimiter=',', newline='\n',
+               header='plate,mjd,fiber_id,fuv_flux_obs,fuv_flux_syn,dn4000_synth,extinction')
