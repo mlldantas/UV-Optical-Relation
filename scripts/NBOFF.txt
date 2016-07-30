@@ -1,0 +1,15 @@
+
+    model{
+    # Priors for regression coefficients
+    for (i in 1:K) { beta[i] ~ dnorm(0, 0.01)}
+    # Prior for  theta
+    theta ~ dgamma(0.01, 0.01)
+    
+    # Likelihood function
+    for (i in 1:N){
+    Y[i] ~ dnegbin(p[i],  theta)
+    p[i] <- theta / (theta + mu[i])
+    log(mu[i]) <- inprod(beta[], X[i,])+log(m[i])
+     }
+    }
+    
