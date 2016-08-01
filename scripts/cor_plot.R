@@ -1,12 +1,36 @@
 library(GGally)
 require(circlize)
+require(gplots)
+require(MASS)
 data<-read.csv("..//Data/my_data_match.csv",header=TRUE)
-
+library("devtools")
+source_url("https://raw.githubusercontent.com/obigriffith/biostar-tutorials/master/Heatmaps/heatmap.3.R")
 CM<-cor(data[,4:12])
 
-ggpairs(data[,4:12])
+column_annotation <- sample(c("red", "blue", "green"), 9, replace=T)
+column_annotation <- as.matrix(column_annotation)
+colnames(column_annotation) <- c("Variable X")
+row_annotation <- sample(c("red", "blue", "green"), 9, replace=T)
+row_annotation <- as.matrix(t(row_annotation))
+rownames(row_annotation) <- c("Variable Y")
+heatmap.3(CM,RowSideColors=row_annotation, ColSideColors=column_annotation)
+parcoord(data[,4:12])
 
-ggcorr(data[,4:12], nbreaks = 10,label = TRUE)
+
+# load packages and prepare data
+library(alluvial)
+tit <- as.data.frame(Titanic)
+
+# only two variables: class and survival status
+tit2d <- aggregate( Freq ~ Class + Survived, data=tit, sum)
+
+alluvial( tit2d[,1:2], freq=tit2d$Freq, xw=0.0, alpha=0.8,
+          gap.width=0.1, col= "steelblue", border="white",
+          layer = tit2d$Survived != "Yes" )
+
+heatmap.2(CM,trace="none",col=bluered(10))
+
+
 
 require(psych)
 
