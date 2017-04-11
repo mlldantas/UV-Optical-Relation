@@ -2,13 +2,13 @@
 
 | Column                 | Type                  | Description |
 |------------------------|-----------------------|-------------|
-| Objid                  | 1590 non-null int64   |             |
-| plate                  | 1590 non-null int64   |             |
-| mjd                    | 1590 non-null int64   |             |
-| fiberid                | 1590 non-null int64   |             |
-| ra                     | 1590 non-null float64 |             |
-| dec                    | 1590 non-null float64 |             |
-| fiberMag_z             | 1590 non-null float64 |             |
+| Objid                  | 1590 non-null int64   | SDSS DR7 Object ID                             |
+| plate                  | 1590 non-null int64   | Spectroscopic Plate SDSS DR7                   |
+| mjd                    | 1590 non-null int64   | Modified Jullian Date SDSS DR7                 |
+| fiberid                | 1590 non-null int64   | Fiber ID SDSS DR7                              |
+| ra                     | 1590 non-null float64 | Right ascenscion J2000                         |
+| dec                    | 1590 non-null float64 | Declination J2000                              |
+| fiberMag_z             | 1590 non-null float64 | Fiber correction calculated using the *z* band |
 | modelMag_u             | 1590 non-null float64 |             |
 | modelMag_g             | 1590 non-null float64 |             |
 | modelMag_r             | 1590 non-null float64 |             |
