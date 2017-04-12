@@ -1,27 +1,27 @@
 ## This a schema browser for the fields in the catalogue (output_results.csv).
 
-| Column                 | Type                  | Description |
-|------------------------|-----------------------|-------------|
-| Objid                  | 1590 non-null int64   | SDSS DR7 Object ID                             |
-| plate                  | 1590 non-null int64   | Spectroscopic Plate SDSS DR7                   |
-| mjd                    | 1590 non-null int64   | Modified Jullian Date SDSS DR7                 |
-| fiberid                | 1590 non-null int64   | Fiber ID SDSS DR7                              |
-| ra                     | 1590 non-null float64 | Right ascenscion J2000                         |
-| dec                    | 1590 non-null float64 | Declination J2000                              |
-| fiberMag_z             | 1590 non-null float64 | Fiber correction calculated using the *z* band |
-| modelMag_u             | 1590 non-null float64 |             |
-| modelMag_g             | 1590 non-null float64 |             |
-| modelMag_r             | 1590 non-null float64 |             |
-| modelMag_i             | 1590 non-null float64 |             |
-| modelMag_z             | 1590 non-null float64 |             |
-| extinction_u           | 1590 non-null float64 |             |
-| extinction_g           | 1590 non-null float64 |             |
-| extinction_r           | 1590 non-null float64 |             |
-| extinction_i           | 1590 non-null float64 |             |
-| extinction_z           | 1590 non-null float64 |             |
-| fuv_mag                | 1590 non-null float64 |             |
-| nuv_mag                | 1590 non-null float64 |             |
-| dered_u                | 1590 non-null float64 |             |
+| Column                 | Type                  | Description                                     |
+|------------------------|-----------------------|-------------------------------------------------|
+| Objid                  | 1590 non-null int64   | SDSS DR7 Object ID                              |
+| plate                  | 1590 non-null int64   | Spectroscopic Plate SDSS DR7                    |
+| mjd                    | 1590 non-null int64   | Modified Jullian Date SDSS DR7                  |
+| fiberid                | 1590 non-null int64   | Fiber ID SDSS DR7                               |
+| ra                     | 1590 non-null float64 | Right ascenscion J2000                          |
+| dec                    | 1590 non-null float64 | Declination J2000                               |
+| fiberMag_z             | 1590 non-null float64 | Fiber correction calculated using the *z* band  |
+| modelMag_u             | 1590 non-null float64 | Model mag from SDSS DR7 - u band                |
+| modelMag_g             | 1590 non-null float64 | Model mag from SDSS DR7 - g band                |
+| modelMag_r             | 1590 non-null float64 | Model mag from SDSS DR7 - r band                |
+| modelMag_i             | 1590 non-null float64 | Model mag from SDSS DR7 - i band                |
+| modelMag_z             | 1590 non-null float64 | Model mag from SDSS DR7 - z band                |
+| extinction_u           | 1590 non-null float64 | u band extinction from SDSS DR7                 | 
+| extinction_g           | 1590 non-null float64 | g band extinction from SDSS DR7                 |
+| extinction_r           | 1590 non-null float64 | r band extinction from SDSS DR7                 |
+| extinction_i           | 1590 non-null float64 | i band extinction from SDSS DR7                 |
+| extinction_z           | 1590 non-null float64 | z band extinction from SDSS DR7                 |
+| fuv_mag                | 1590 non-null float64 | FUV magnitude from GALEX DR6 Plus 7             |
+| nuv_mag                | 1590 non-null float64 | NUV magnitude from GALEX DR6 Plus 7             |
+| dered_u                | 1590 non-null float64 | SDSS magnitude corrected by extinction - u band |
 | dered_g                | 1590 non-null float64 |             |
 | dered_r                | 1590 non-null float64 |             |
 | dered_i                | 1590 non-null float64 |             |
